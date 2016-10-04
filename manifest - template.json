@@ -1,0 +1,20 @@
+{
+	"name": "Website Info"//定义扩展的名称
+	, "description": "Display the website IP address and IP location."//描述扩展
+	, "manifest_version": //2 目前都是版本2
+	, "version": "0.1.3" //定义扩展的版本号，似乎只能是数字
+	, "background": {
+		"scripts": ["background.js"] //定义在后台运行的脚本。
+	}
+	, "permissions": ["http://*/*", "https://*/*", "tabs", "nativeMessaging", "webRequest"]
+		//定义申请的权限，例子中包含所有http，https请求，标签页， "nativeMessaging", "webRequest"两个chrome特有的API
+	, "content_scripts": [{
+		"matches": ["http://*/*", "https://*/*"] //定义哪些页面要注入
+		, "js": ["main.js"] //要注入的js
+		, "css": ["style.css"] //要注入的js
+   }]
+}
+
+//JSON是不支持注释的，此模版文件中的注释必须全部去除才能正常使用。
+//JSON是不支持注释的，此模版文件中的注释必须全部去除才能正常使用。
+//JSON是不支持注释的，此模版文件中的注释必须全部去除才能正常使用。
