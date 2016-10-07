@@ -1,4 +1,6 @@
-#snotic {
+/*snotic CSS start*/
+
+.snotic {
 	position: fixed;
 	width: 90%;
 	padding: 10px;
@@ -9,14 +11,15 @@
 	color: #FFF;
 	text-align: center;
 	word-wrap: break-word;
-	z-index: 1000000000000000;
 }
 
 @media only screen and (min-width: 600px) {
-		#snotic {
-			width: 300px;
-			margin: 30px;
-			right: 30px;
-		}
+	.snotic {
+		width: 400px;
+		margin: 30px;
+		right: 30px;
 	}
 }
+
+
+/*snotic CSS end*/

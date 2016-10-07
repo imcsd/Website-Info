@@ -7,10 +7,13 @@ chrome.extension.sendMessage({}/*发送信息的内容，这里为空Object，�
 //SHDON Notice 模块
 function showNotice(c, t) {
 	var ntdiv = document.createElement("div");
-	ntdiv.id = "snotic";
+	ntts = new Date().getTime();
+	ntdiv.className = "snotic"
+	ntdiv.id = "snotic" + ntts;
 	ntdiv.innerHTML = c;
 	document.body.appendChild(ntdiv);
-	setTimeout("document.body.removeChild(document.getElementById('snotic'))", t)
+	var setTimeoutCode = "document.body.removeChild(document.getElementById('snotic"+ntts+"'))";
+	setTimeout(setTimeoutCode, t);
 }
 
 //display responsed data
