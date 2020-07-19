@@ -1,7 +1,13 @@
+// 页面打开后，发送请求到 background.js 请求相关信息
 chrome.extension.sendMessage({}/*发送信息的内容，这里为空Object，但不能没有*/, function (response) {
 	//匿名函数处理background.js返回的数据，通过参数response传递
-	//console.log(response);	//调试查看返回的数据
-	getIpInfo(response);	//回调 在页面中显示返回数据
+});
+
+// 接受 background.js 传来的相关信息
+chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
+	console.log(request);
+	displayInfo(request);
+	sendResponse({})
 });
 
 //SHDON Notice 模块
@@ -26,26 +32,19 @@ function urlToDomain(url) {
 
 //display responsed data
 function displayInfo(r) {
-	var t = "Domain: " + urlToDomain(r.wsInfo[5]) + " <a target=\"_blank\" href=\"http://whois.chinaz.com/" + urlToDomain(r.wsInfo[5]) + "\">Whois</a><br>" + "IP: " + r.wsInfo[0] +"<br>IP Info: " + showIpInfo(ipInfoObj) + "<br>fromCache: " + r.wsInfo[1] + "<br>requestId: " + r.wsInfo[2] + "<br>statusLine: "+ r.wsInfo[3]  + "<br>tabId: " + r.wsInfo[4];
+	let wsInfo = r.wsInfo;
+	let ipInfo = r.ipInfo;
+
+	let t = `
+		Domain: ${urlToDomain(wsInfo[5])}
+		<a target=\"_blank\" href=\"http://whois.chinaz.com/${urlToDomain(wsInfo[5])}\">Whois</a>
+		<br>IP: ${wsInfo[0]}
+		<br>IP Area: ${ipInfo.country} ${ipInfo.regionName} ${ipInfo.city}
+		<br>AS: ${ipInfo.as}
+		<br>fromCache: ${wsInfo[1]}
+		<br>requestId: ${wsInfo[2]}
+		<br>statusLine: ${wsInfo[3]}
+		<br>tabId: ${wsInfo[4]}`;
+
 	showNotice(t, 5000);
-}
-
-function getIpInfo(r) {
-	var ipInfo = new XMLHttpRequest;
-	ipInfo.onreadystatechange = function() {
-		if(ipInfo.readyState == 4 && ipInfo.status == 200){
-			ipInfoObj = JSON.parse(ipInfo.responseText);
-			displayInfo(r);
-		}
-	}
-	ipInfo.open('GET','https://freeapi.ipip.net/'+r.wsInfo[0], true);
-	ipInfo.send();
-}
-
-function showIpInfo(ipObj) {
-	var ipStr = "";
-	for(i=0; i<ipObj.length; i++) {
-		ipStr += ipObj[i] + " ";
-	}
-	return ipStr;
 }

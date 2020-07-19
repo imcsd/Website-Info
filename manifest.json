@@ -2,7 +2,7 @@
 	"name": "Website Info"
 	, "description": "Display the website IP address and IP location."
 	, "manifest_version": 2
-	, "version": "0.5.12"
+	, "version": "0.6.0"
 	, "background": {
 		"scripts": ["background.js"]
 	}
