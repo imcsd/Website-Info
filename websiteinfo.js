@@ -18,6 +18,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	  </div>
       <div><strong>IP:</strong> ${info.ip}</div>
       <div><strong>Region:</strong> ${info.region}</div>
+      <div><strong>ISP:</strong> ${info.isp}</div>
+      <div><strong>ORG:</strong> ${info.org}</div>
+      <div><strong>AS:</strong> ${info.as}</div>
       <div><strong>From Cache:</strong> ${info.fromCache}</div>
       <div><strong>Request ID:</strong> ${info.requestId}</div>
       <div><strong>Status Line:</strong> ${info.statusLine}</div>
