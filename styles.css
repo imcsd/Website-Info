@@ -1,25 +1,20 @@
-/*snotic CSS start*/
-
-.snotic {
+/*snotice CSS start*/
+.snotice {
 	position: fixed;
-	width: 90%;
-	padding: 10px;
+	padding: 10px 20px;
+	border-radius: 5px;
 	box-sizing: border-box;
-	margin: 5%;
 	bottom: 50px;
 	background-color: rgba(0, 0, 0, 0.8);
 	color: #FFF;
 	text-align: center;
 	word-wrap: break-word;
+	z-index: 9999;
 }
 
 @media only screen and (min-width: 600px) {
-	.snotic {
-		width: 400px;
-		margin: 30px;
+	.snotice {
 		right: 30px;
 	}
 }
-
-
-/*snotic CSS end*/
+/*snotice CSS end*/
