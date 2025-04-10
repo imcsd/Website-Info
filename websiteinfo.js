@@ -28,9 +28,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     `;
     document.body.appendChild(infoBox);
 
-    // 设置5秒后自动移除;
-    setTimeout(() => {
-      infoBox.remove();
-    }, 5000);
+    // 定义移除信息框的逻辑
+    let timeoutId;
+
+    const startTimer = () => {
+      timeoutId = setTimeout(() => {
+        infoBox.remove();
+      }, 5000);
+    };
+
+    const clearTimer = () => {
+      clearTimeout(timeoutId);
+    };
+
+    // 监听鼠标事件
+    infoBox.addEventListener("mouseenter", clearTimer); // 鼠标移入时停止计时
+    infoBox.addEventListener("mouseleave", startTimer); // 鼠标移出时开始计时
+
+    // 初始化计时器
+    startTimer();
   }
 });
