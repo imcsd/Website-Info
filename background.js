@@ -16,57 +16,46 @@ chrome.webRequest.onCompleted.addListener(
   async (details) => {
     // 仅处理主文档请求（类型为 "main_frame"）
     if (details.type === "main_frame" && details.ip && details.tabId > -1) {
-      // 检查是否是局域网 IP
-      if (isPrivateIP(details.ip)) {
-        console.log(`Skipping private IP: ${details.ip}`);
-        return; // 不请求 IP 信息
-      }
+      const ip = details.ip || "Unknown";
+      const url = new URL(details.url);
+      let data = {
+        domain: url.hostname,
+        ip: ip,
+        region: "Private Network", // 默认显示局域网标识
+        fromCache: details.fromCache,
+        requestId: details.requestId,
+        statusLine: details.statusLine,
+        tabId: details.tabId,
+      };
 
-      try {
-        const response = await fetch(
-          `http://ip-api.com/json/${details.ip}?lang=zh-CN`
-        );
-        const ipData = await response.json();
-
-        // 构造数据对象
-        const url = new URL(details.url); // 获取 URL 对象
-        const data = {
-          domain: url.hostname, // 提取域名
-          ip: details.ip,
-          region: ipData
-            ? `${ipData.country}, ${ipData.regionName}, ${ipData.city}`
-            : "Unknown",
-          isp: ipData ? ipData.isp : "Unknown",
-          org: ipData ? ipData.org : "Unknown",
-          as: ipData ? ipData.as : "Unknown",
-          fromCache: details.fromCache,
-          requestId: details.requestId,
-          statusLine: details.statusLine,
-          tabId: details.tabId,
-        };
-
-        // 检查目标标签页是否可以接收消息
-        chrome.tabs.sendMessage(
-          details.tabId,
-          { action: "ping" },
-          (response) => {
-            if (chrome.runtime.lastError || !response) {
-              console.warn(
-                `Tab ${details.tabId} is not available for messaging.`
-              );
-              return; // 无法发送消息，跳过
-            }
-
-            // 发送真正的数据
-            chrome.tabs.sendMessage(details.tabId, {
-              action: "showInfo",
-              data,
-            });
+      if (!isPrivateIP(ip)) {
+        // 非局域网 IP 请求 IP 归属地信息
+        try {
+          const response = await fetch(
+            `http://ip-api.com/json/${details.ip}?lang=zh-CN`
+          );
+          if (response.ok) {
+            const ipData = await response.json();
+            data.region = ipData
+              ? `${ipData.country}, ${ipData.regionName}, ${ipData.city}`
+              : "Unknown";
+            data.isp = ipData.isp ? ipData.isp : "Unknown";
+            data.org = ipData.org ? ipData.org : "Unknown";
+            data.as = ipData.as ? ipData.as : "Unknown";
           }
-        );
-      } catch (error) {
-        console.error("Error fetching IP data:", error);
+        } catch (error) {
+          console.error("Error fetching IP data:", error);
+        }
       }
+
+      // 向 content.js 发送数据
+      chrome.tabs.sendMessage(details.tabId, { action: "ping" }, (response) => {
+        if (chrome.runtime.lastError || !response) {
+          console.warn(`Tab ${details.tabId} is not available for messaging.`);
+          return;
+        }
+        chrome.tabs.sendMessage(details.tabId, { action: "showInfo", data });
+      });
     }
   },
   { urls: ["<all_urls>"] }
