@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local IP Info</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+        width: 300px;
+      }
+      .loading {
+        color: #888;
+      }
+      .info p {
+        margin: 5px 0;
+      }
+      .error {
+        color: red;
+      }
+      .copy-button {
+        margin-left: 5px;
+        padding: 2px 5px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .copy-success {
+        color: green;
+        margin-top: 5px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>当前电脑 IP 信息</h3>
+    <div id="loading" class="loading">加载中...</div>
+    <div id="info" class="info"></div>
+    <div id="error" class="error"></div>
+    <div id="copy-success" class="copy-success">已成功复制 IP 地址！</div>
+    <script src="popup.js"></script>
+  </body>
+</html>

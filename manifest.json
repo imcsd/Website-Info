@@ -14,5 +14,11 @@
       "js": ["websiteinfo.js"],
       "css": ["styles.css"]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "200": "logo.png"
+    }
+  }
 }
