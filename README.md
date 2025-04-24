@@ -23,13 +23,13 @@ You can install the extension using one of the following methods:
 1. Go to the [Releases](https://github.com/imcsd/Website-Info/releases) page of this repository.
 2. Download the latest `.crx` file.
 3. Drag and drop the `.crx` file into the Chrome extensions page (`chrome://extensions/`).
-4. Since this extension is not published on the Chrome Web Store, you need to manually add the extension ID (`epmbdpcfhcpaiphcinkmkioacjmmgmdi`) to the registry whitelist:
+4. Since this extension is not published on the Chrome Web Store, you need to manually add the extension ID (`epmbdpcfhcpaiphcinkmkioacjmmgmdi`) to the registry ExtensionInstallAllowlist:
 
    - Open the Command Prompt as an administrator.
    - Run the following command to add the extension ID to the registry:
 
      ```cmd
-     reg add "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallWhitelist" /v 10110 /t REG_SZ /d epmbdpcfhcpaiphcinkmkioacjmmgmdi /f
+     reg add "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallAllowlist" /v 10110 /t REG_SZ /d epmbdpcfhcpaiphcinkmkioacjmmgmdi /f
      ```
 
 5. Restart Chrome and follow the prompts to complete the installation.
