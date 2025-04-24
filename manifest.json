@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Website Info",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "Displays website information (IP, region, etc.) in the page corner.",
   "permissions": ["webRequest", "activeTab", "storage"],
   "host_permissions": ["<all_urls>"],
