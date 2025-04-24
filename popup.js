@@ -16,10 +16,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           <strong>IP 地址:</strong> ${data.query}
           <button class="copy-button" data-ip="${data.query}">复制</button>
         </p>
-        <p><strong>省市区:</strong> ${data.regionName}, ${data.city}</p>
+        <p><strong>地区:</strong> ${data.country} ${data.regionName} ${data.city}</p>
         <p><strong>ISP:</strong> ${data.isp}</p>
-        <p><strong>组织:</strong> ${data.org}</p>
-        <p><strong>自治系统:</strong> ${data.as}</p>
+        <p><strong>ORG:</strong> ${data.org}</p>
+        <p><strong>AS:</strong> ${data.as}</p>
       `;
 
       // 绑定复制按钮事件
